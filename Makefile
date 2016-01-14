@@ -15,7 +15,7 @@ all: $(DOC).pdf
 $(DOC).aux: $(DOC).tex $(DEPS)
 	$(LATEX) $(DOC).tex
 
-$(DOC).pdf: $(DOC).aux $(BIBAUX)
+$(DOC).pdf: $(DOC).aux $(BIBS)
 	$(LATEX) $(DOC).tex
 	$(LATEX) $(DOC).tex
 
