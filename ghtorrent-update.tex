@@ -181,12 +181,10 @@ with Github Archive~\footnote{https://www.githubarchive.org} daily.
     \includegraphics[scale=0.332]{api-errors}
     \includegraphics[scale=0.438]{events-per-min}
   \end{center}
-  \caption{Service monitoring graphs for a typical day (Jan 18, 2016)}
+  \caption{Service monitoring graphs for a typical day (Jan 18,
+  2016)}
   \label{fig:service-stats}
 \end{figure}
-
-\subsection{Better Repository Descriptions}
-
 
 \subsection{Repository Languages}
 GitHub by default calculates programming language usage statistics for all
@@ -238,7 +236,7 @@ configuration parameter and are not retrieved by default. Therefore, the
 (\texttt{project\_\-commits}) table is inconsistent with respect to
 fork commits.
 
-\subsection{Better User Identification}
+\subsection{User and Repository Descriptions}
 
 When a commit is being processed by GHTorrent, a user must be associated with it.
 GHTorrent first attempts to query GitHub for information about the committer
@@ -248,9 +246,15 @@ possible to identify fake users; GHTorrent now marks them as such in the MySQL
 database. Moreover, it can convert fake users to normal users if a user with
 the provided email is registered with GitHub in the future.
 
-Moreover, similarly to projects, users can also delete their accounts.
+Similarly to projects, users can also delete their accounts.
 GHTorrent keeps track of deleted users by marking them as such. This helps
 researchers to eliminate inactive users from their analyses.
+
+Finally, repositories are also marked as deleted if GHTorrent cannot find
+them during the bi-monthly update cycle. To inform researchers about the
+last full repository update, the projects table includes an ``updated\_at''
+field. Moreover, the ``forks'' table has been removed and the parent
+repository information is being kept in the ``forked\_\-from'' field.
 
 \subsection{User Geolocation}
 
@@ -290,12 +294,20 @@ The following services/features have been discontinued:
 
 \begin{description}
 
-  \item[Organization Members and Collaborators] On Nov 2014, GitHub disabled
-    the repository membership query end point. Interestingly, they did not
-    disable the membership events. As GHTorrent follows the event stream,
-    it can retrieve new repository members, but it will not remove 
+  \item[Repository Collaborators and Organization Members] On Nov 2014, GitHub
+    disabled the repository membership query endpoint. Interestingly, they did
+    not disable the membership events. As GHTorrent follows the event stream, it
+    can retrieve new repository members, but it cannot update membership
+    information during the bi-monthly update cycles. Moreover, GitHub made the
+    organization membership information private to organizations by default
+    (with the option to make it public resting with the organization), which
+    does not allow GHTorrent to update organization members from all
+    organizations.
 
-  \item[Followers] 
+  \item[Followers] GitHub does not emit follow events since late 2014. However,
+    the API endpoint does permit to retrieve user followers, so GHTorrent
+    collects followers during the bi-monthly user update cycle. However, the
+    timestamp of the follow action cannot be recorded accurately.
 
   \item[Lean GHTorrent] Lean GHTorrent~\cite{GVSZ14} was effectively a dataset
     slicer, for users that could not use the dataset in its entirety. Through 2
