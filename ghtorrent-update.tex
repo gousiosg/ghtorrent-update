@@ -55,11 +55,11 @@
 
 With over 31 million repositories and 12 million users, GitHub is by far the
 biggest open source forge in existense. Since early 2012, the GHTorrent project
-has been retrieving data from GitHub's open access {\sc api} and offering them to the
-repository mining community.  In this paper, we describe how we grew GHTorrent
-to 10x the size of early 2013, while at the same time improving its coverage,
-quality and versatility and offering data access services to hundrends of
-researchers.
+has been retrieving data from GitHub's open access {\sc api} and offering them
+to the repository mining community. In this paper, we describe how we grew
+GHTorrent to 10x the size of early 2013, while at the same time improving its
+coverage, quality and versatility and offering data access services to hundrends
+of researchers.
 
 \end{abstract}
 
@@ -253,20 +253,23 @@ monitor the evolution of programming language use.
 
 When a project is forked, GitHub will create an identical copy of the project
 repository and initialize a new issue tracker for it. Internally, the repository
-contents are not really duplicated; GitHub will use a copy-on-write
-mechanism to minimize disk space use.\footnote{http://githubengineering.com/counting-objects/} This process makes forking very cheap for GitHub.
+contents are not really duplicated; GitHub will use a copy-on-write mechanism to
+minimize disk space
+use.\footnote{http://githubengineering.com/counting-objects/} This process makes
+forking very cheap for GitHub.
 
 When GHTorrent encounters a fork event, it treats the fork as a new repository.
 It thus recursively retrieves all information about the fork, such as the
-repository owner and issue labels. In the early versions of
-GHTorrent, recursive retrieval also included commits. For big and popular
-projects, such as Ruby on Rails (55k commits, 11k forks),
-this process required several (thousand) additional GitHub {\sc api} calls, which
-quickly depleted GHTorrent limited {\sc api} rates. For this reason, GHTorrent implemented a mechanism that only retrieves new commits from forks until
-it finds a shared commit with the parent repository; it would then switch
-to copying commits internally within the GHTorrent database. This trick worked
-with formidable efficiency, as it cut down on {\sc api} calls (and the time required
-to process them) by more than 95\% for big projects.
+repository owner and issue labels. In the early versions of GHTorrent, recursive
+retrieval also included commits. For big and popular projects, such as Ruby on
+Rails (55k commits, 11k forks), this process required several (thousand)
+additional GitHub {\sc api} calls, which quickly depleted GHTorrent limited {\sc
+api} rates. For this reason, GHTorrent implemented a mechanism that only
+retrieves new commits from forks until it finds a shared commit with the parent
+repository; it would then switch to copying commits internally within the
+GHTorrent database. This trick worked with formidable efficiency, as it cut down
+on {\sc api} calls (and the time required to process them) by more than 95\% for
+big projects.
 
 However, its very efficiency caused a new problem; \emph{too many} forks where
 processed meant that the table that records the association between commits and
