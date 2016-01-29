@@ -32,7 +32,7 @@
 % --- End of Author Metadata ---
 
 \title{The evolution of GHTorrent: growing an open access dataset 10x}
-\numberofauthors{1} %  in this sample file, there are a *total*
+\numberofauthors{2} %  in this sample file, there are a *total*
 % of EIGHT authors. SIX appear on the 'first-page' (for formatting
 % reasons) and the remaining two appear in the \additionalauthors section.
 %
@@ -48,6 +48,10 @@
        \affaddr{Radboud University Nijmegen}\\
        \affaddr{Nijmegen, the Netherlands}\\
        \email{g.gousios@cs.ru.nl}
+\alignauthor Trevor Carnahan\\
+       \affaddr{Microsoft}\\
+       \affaddr{Redmond, WA, USA}\\
+       \email{trevorc@microsoft.com}
 }
 
 \maketitle
@@ -70,46 +74,69 @@ researchers.
 %
 \begin{CCSXML}
 <ccs2012>
- <concept>
-  <concept_id>10010520.10010553.10010562</concept_id>
-  <concept_desc>Computer systems organization~Embedded systems</concept_desc>
-  <concept_significance>500</concept_significance>
- </concept>
- <concept>
-  <concept_id>10010520.10010575.10010755</concept_id>
-  <concept_desc>Computer systems organization~Redundancy</concept_desc>
-  <concept_significance>300</concept_significance>
- </concept>
- <concept>
-  <concept_id>10010520.10010553.10010554</concept_id>
-  <concept_desc>Computer systems organization~Robotics</concept_desc>
-  <concept_significance>100</concept_significance>
- </concept>
- <concept>
-  <concept_id>10003033.10003083.10003095</concept_id>
-  <concept_desc>Networks~Network reliability</concept_desc>
-  <concept_significance>100</concept_significance>
- </concept>
+<concept>
+<concept_id>10010405.10010476.10003392</concept_id>
+<concept_desc>Applied computing~Digital libraries and archives</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10002951.10003227.10003351</concept_id>
+<concept_desc>Information systems~Data mining</concept_desc>
+<concept_significance>300</concept_significance>
+</concept>
+<concept>
+<concept_id>10003120.10003130.10003233.10003597</concept_id>
+<concept_desc>Human-centered computing~Open source software</concept_desc>
+<concept_significance>300</concept_significance>
+</concept>
 </ccs2012>
 \end{CCSXML}
 
-\ccsdesc[500]{Computer systems organization~Embedded systems}
-\ccsdesc[300]{Computer systems organization~Redundancy}
-\ccsdesc{Computer systems organization~Robotics}
-\ccsdesc[100]{Networks~Network reliability}
-
+\ccsdesc[500]{Applied computing~Digital libraries and archives}
+\ccsdesc[300]{Information systems~Data mining}
+\ccsdesc[300]{Human-centered computing~Open source software}
 
 %
 %  Use this command to print the description
 %
 \printccsdesc
 
-\keywords{ACM proceedings; \LaTeX; text tagging}
+\keywords{dataset, GitHub, GHTorrent}
 
 \section{Introduction}
 
+GHTorrent was first presented as a proof-of-concept in 2012~\cite{GS12} and as
+a complete version in 2013~\cite{Gousi13}. Since then, it has been one of the most
+popular datasets for the repository mining community. Apart from traditional
+repository mining, it has been frequently used as an easy-to-use initial
+filter for data to analyze, as a data mining competition
+dataset,\footnote{\url{https://github.com/blog/1864-third-annual-github-data-challenge}}
+as educational material,\footnote{e.g.\url{http://web.stanford.edu/class/cs224w/resources.html}} as and as a basis for other tools\cite{Cosent15}.
+By itself or through derivative work, it has been featured several times
+on popular developer news sites.\footnote{e.g. \url{https://news.ycombinator.com/item?id=8818035} and\\ \url{https://redd.it/2ig8yz}}
 
-\section{Current status}
+GitHub is a lively community of collaborating developers; since GHTorrent
+started, its user base grew from 1.2 million users to 12 million users, while
+its repository count from 4 million to 30 million. GitHub's users are not idle
+either; as Figure~\ref{fig:growth} shows, the number of events triggered by user
+actions has been growing exponentially. GHTorrent attempted (as
+Table~\ref{tab:stats} shows) to keep up with the increased traffic using two
+strategies: i) extensive profiling and optimization of both GHTorrent's code
+base and the underlying services and ii) relying on its user community for
+GitHub API keys.
+
+In this paper, we outline the progress of GHTorrent since 2013; we focus on the
+additions, removals and differences in the way GHTorrent works and provides
+access to its datasets. We skip a generic introduction to GHTorrent itself, for
+which we refer interested authors to references~\cite{GS12} and~\cite{Gousi13}.
+We complement this work with a list of (still) open and promising research
+topics that can be explored using GHTorrent.
+
+\section{New developments}
+
+Changes to the data API endpoints at GitHub and issues in the data collection
+process, as well as responding to user requests, led to a series of new
+developments in GHTorrent. We present the most important ones below.
 
 \begin{table}
   \centering
@@ -133,12 +160,24 @@ researchers.
       Issue comments             & 42,021,374  & 43,416,372    & 14.6x\\
       Watchers (stars)           & 51,698,373  & 37,022,681    & 6.6x\\
       \hline
-  \end{tabular}
-    \caption{GHTorrent database contents as of Jan 14, 2016. The difference column reports the difference to the numbers reported in reference ~\cite{Gousi13}.}
+    \end{tabular}
+
+%    \begin{tabular}{llll}
+%      \hline
+%      \multicolumn{3}{l}{\bfseries{Service statistics}}\\
+%      \hline
+%      Programmatic access users  & 150         &&\\
+%      \ldots of which per day    & 1-2         &&\\
+%      GitHub API keys            & 55          &&\\
+%      Monthly web users          & 2000        &&\\
+%      \hline
+%  \end{tabular}
+    \caption{GHTorrent database contents as of Jan 14, 2016. The difference column reports the difference to the numbers reported in reference ~\cite{Gousi13}}
   \end{small}
+  \label{tab:stats}
 \end{table}
 
-\subsection{Three operating modes}
+\subsection{Three operation modes}
 
 GHTorrent primarily focuses on following GitHub's event stream and, by applying
 dependency-based recursive retrieval, to retrieve all linked entities (e.g.  all
@@ -174,6 +213,14 @@ Furthermore, to eliminate data retrieval holes caused by arbitrary errors in
 collecting the event stream, we synchronize the contents of the event collection
 with Github Archive~\footnote{https://www.githubarchive.org} daily.
 
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.5]{github-growth}
+  \end{center}
+  \caption{Number of events per type generated per day (smoothing has been
+  applied)}
+  \label{fig:growth}
+\end{figure}
 
 \begin{figure}
   \begin{center}
@@ -231,7 +278,7 @@ is that \texttt{project\_commits} models an $M \times N$ relationship between
 projects and commits and this cannot be normalized further without signicant
 duplication (Boyce-Codd Normal form).
 
-Concequently, retrieving fork commits was converted to an optional
+Consequently, retrieving fork commits was converted to an optional
 configuration parameter and are not retrieved by default. Therefore, the
 (\texttt{project\_\-commits}) table is inconsistent with respect to
 fork commits.
@@ -348,13 +395,26 @@ The move to Azure has the following benefits for the research community:
 
 \subsection{Service updates}
 
-The following changes took place in the 
+The following changes took place in the way the GHTorrent data collection
+and distribution is being run:
 
-Weekly MySQL dumps, daily mongoDb dumps
+\begin{description}
 
-Mongo, MySQL, Juniper setup with MySQL/Mongo
+  \item[Backups] GHTorrent distributes bi-weekly MySQL dumps and daily MongoDB
+    backups.
 
-\section{Lessons learned}
+  \item[Programmatic access] GHTorrent offered programmatic access over
+    {\sc ssh} tunnels to MongoDB since late 2013. Programmatic access to the
+    live MySQL server is planned for Q2 2016.
+
+  \item[GitHub API keys] In exchange for programmatic access, GHTorrent asks
+    interested parties to (voluntarily) provide GitHub API keys. We have
+    currently collected 50 active API keys, which allowed us to run the
+    bi-montly update cycle for users and projects.
+
+\end{description}
+
+%\section{Lessons learned}
 
 
 
@@ -370,30 +430,44 @@ researchers, new capabilities on offer and a large scale data analysis
 infrastructure in place, the research community can collaborate to answer deeper
 questions and impact the practice of millions of developers per day.
 
-To 
+Below, we present a collection of open research topics that can be answered
+with large-scale quantitative or mixed-method studies using GHTorrent. The
+topics partially stem from an expert panel (comprising of researchers,
+software analytics and open source software experts) meeting at Microsoft.
 
 \begin{description}
 
-  \item[Developer clustering] Looking at technology used, interaction types, geographies, social circles…
+  \item[Developer clustering] Despite GitHub's vast number of subscribed
+    developers, only few are active any given day.
+
+    Looking at technology used, interaction types, geographies, social circles
     Identify different community structures.  Eg., to better understand the community dynamics
 
     Are there clusterings of languages that developers use together
 
-
-  \item[Project clustering]
-
-    You want to compare across similar projects or project types that do not matter, e.g. student projects. Features of gihub might also matter for different types. Monitor these indicators.
-Expectations on github projects, download only, contributions, advertising, using the tools only, …
-
-
-  \item[Developer productivity] Drive-by contributions: Is the gain in sustained contribution from fewer people or smaller individual contributions from many people
+  \item[Productivity] Drive-by contributions: Is the gain in sustained contribution from fewer people or smaller individual contributions from many people
 
   What teams, projects are more productive, what are their practices and patterns?
 
 Tools for hiring decision managers on developers and their code
 
+  \item[Project clustering] Similarly to developers, most repositories are
+    inactive and small~\cite{KGBSGD15}. Moreover, as Table~\ref{tab:stats}
+    presents, almost half of the repositories are forks.
 
-  \item[Community best practices]
+    You want to compare across similar projects or project types that do not matter, e.g. student projects. Features of gihub might also matter for different types. Monitor these indicators.
+Expectations on github projects, download only, contributions, advertising, using the tools only, …
+
+  \item[Software Ecosystems] Much of the open source development, especially in
+    areas such as software tools and libraries for web development, is taking
+    place on GitHub. The use of standardized software library management tools
+    (e.g. \textsf{npm} for Javascript or \textsf{gem} for Ruby) along with the
+    centralized hosting allows researchers to examine the full dependency graph
+    among libraries and their users at the method call
+    level. Researchers can then examine issues such as propagation of security
+    flows 
+
+  \item[Community best practices] 
 
 understand characteristics of successful projects, tell how our projects are doing and to determine if someone else’s project is solid enough to depend on or worthy of investment
 
@@ -431,7 +505,9 @@ Language popularity
 
 \section{Conclusions}
 
-
+In this work, we presented the evolution of the GHTorrent dataset. The
+exploration of the wealth of data that GitHub provides has only begun;
+GHTorrent is 
 
 \section*{Acknowledgements}
 
