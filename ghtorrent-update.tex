@@ -1,7 +1,7 @@
 \documentclass{sig-alternate}
 \usepackage{tabularx}
 \usepackage[noabbrev]{cleveref}
-\usepackage{times}
+\usepackage{paralist}
 
 \begin{document}
 
@@ -32,7 +32,7 @@
 % --- End of Author Metadata ---
 
 \title{The evolution of GHTorrent: growing an open access dataset 10x}
-\numberofauthors{2} %  in this sample file, there are a *total*
+\numberofauthors{1} %  in this sample file, there are a *total*
 % of EIGHT authors. SIX appear on the 'first-page' (for formatting
 % reasons) and the remaining two appear in the \additionalauthors section.
 %
@@ -48,10 +48,6 @@
        \affaddr{Radboud University Nijmegen}\\
        \affaddr{Nijmegen, the Netherlands}\\
        \email{g.gousios@cs.ru.nl}
-\alignauthor Trevor Carnahan\\
-       \affaddr{Microsoft}\\
-       \affaddr{Redmond, WA, USA}\\
-       \email{trevorc@microsoft.com}
 }
 
 \maketitle
@@ -190,7 +186,7 @@ locations) as GitHub does not emit any related events, and
 iii) we cannot collect all the data for projects that existed before GHTorrent
 For those reasons, we introduced two additional operating modes:
 
-\begin{description}
+\begin{compactdesc}
 
   \item[Full-repo / user retrievals] When an error is reported by a GHTorrent
     user for a specific repository or a collection of repositories, we run a
@@ -207,7 +203,7 @@ For those reasons, we introduced two additional operating modes:
     but not on GitHub) and can update their metadata (e.g. programming
     languages).
 
-\end{description}
+\end{compactdesc}
 
 Furthermore, to eliminate data retrieval holes caused by arbitrary errors in
 collecting the event stream, we synchronize the contents of the event collection
@@ -339,7 +335,7 @@ conclusions from this data.
 
 The following services/features have been discontinued:
 
-\begin{description}
+\begin{compactdesc}
 
   \item[Repository Collaborators and Organization Members] On Nov 2014, GitHub
     disabled the repository membership query endpoint. Interestingly, they did
@@ -362,7 +358,7 @@ The following services/features have been discontinued:
     the best of our knowledge no work resulted from its use. Since January 2016,
     Lean GHTorrent was discontinued.
 
-\end{description}
+\end{compactdesc}
 
 \subsection{Azure and Data Lake}
 
@@ -374,7 +370,7 @@ move was motivated by a donation of free Azure usage credits.
 
 The move to Azure has the following benefits for the research community:
 
-\begin{itemize}
+\begin{compactitem}
 
   \item GHTorrent servers are now more capable of dealing with the accumulated
     data sizes and Github growth. This means more accurate data collection
@@ -390,7 +386,7 @@ The move to Azure has the following benefits for the research community:
     of the art big data analysis tools (e.g. {\sc usql}, Spark) to scale
     research across all GHTorrent data in real-time.
 
-\end{itemize}
+\end{compactitem}
 
 
 \subsection{Service updates}
@@ -398,7 +394,7 @@ The move to Azure has the following benefits for the research community:
 The following changes took place in the way the GHTorrent data collection
 and distribution is being run:
 
-\begin{description}
+\begin{compactdesc}
 
   \item[Backups] GHTorrent distributes bi-weekly MySQL dumps and daily MongoDB
     backups.
@@ -412,7 +408,7 @@ and distribution is being run:
     currently collected 50 active API keys, which allowed us to run the
     bi-montly update cycle for users and projects.
 
-\end{description}
+\end{compactdesc}
 
 %\section{Lessons learned}
 
@@ -431,83 +427,78 @@ infrastructure in place, the research community can collaborate to answer deeper
 questions and impact the practice of millions of developers per day.
 
 Below, we present a collection of open research topics that can be answered
-with large-scale quantitative or mixed-method studies using GHTorrent. The
-topics partially stem from an expert panel (comprising of researchers,
-software analytics and open source software experts) meeting at Microsoft.
+with large-scale quantitative or mixed-method studies using GHTorrent.
 
-\begin{description}
+\noindent{\bfseries Developers} Moreover, not all GitHub users are
+software developers; web designers, testers, amateur programmers and students
+all use GitHub to collaborate in open projects. Different users have different
+needs and contribute in different capacities to OSS~\cite{}; to provide
+customized support to them it is important to devise algorithms to cluster them
+in groups based on their activity traces. Clustering methods can investigate
+signals such as the technology stack used, interaction types, physical location
+and contribution networks. On the same note, it is important to investigate how
+\emph{communities} of similar GitHub users work together to build large {\sc
+oss} projects. Finally, the extraction of developer profiles, for example
+comprising of programming languages, domain expertise and contribution types can
+facilitate the automated assignment of developers to incoming issues or the
+matching of developers to job descriptions.
 
-  \item[Developer clustering] Despite GitHub's vast number of subscribed
-    developers, only few are active any given day.
+\noindent{\bfseries Projects} A common issue faced by researchers when
+analyzing repositories on GitHub is automatically determining what kind of
+contents the repository hosts. This issue is complicated by the fact that most
+repositories are small and inactive~\cite{KGBSGD15}, while, as
+Table~\ref{tab:stats} presents, almost half of them are forks. What is needed
+are methods to classify repositories into types based on their overall
+functionality (e.g. libraries, front end frameworks, web interfaces etc).
+Furthermore, it is very helpful to determine the application domain (e.g. web
+development, financial analysis, scientific software etc) that a repository is a
+part of, as this will enable cross-domain studies of development methods and
+styles.
 
-    Looking at technology used, interaction types, geographies, social circles
-    Identify different community structures.  Eg., to better understand the community dynamics
+\noindent{\bfseries Software Ecosystems} Much of the open source development,
+especially in areas such as software tools and libraries for web development, is
+taking place on GitHub. The use of standardized software library management
+tools (e.g. \textsf{npm} for Javascript or \textsf{gem} for Ruby) along with the
+centralized hosting allows researchers to examine the full dependency graph
+among libraries and their users at the method call level. Researchers can then
+examine issues such as propagation of security flows, clustering of programming
+languages in various application domains and develop methodologies for
+data-driven API evolution.
 
-    Are there clusterings of languages that developers use together
+\noindent{\bfseries Community best practices} Existing research on open source
+software development has identified several patterns of collaborative
+development (e.g. the onion model). This research however assumed community
+organizations very different than what GitHub affords; the ability to submit a
+pull request to any project on GitHub effectively flattens the organizational
+hierarchy and makes the contribution process more streamlined. New research
+should identify the new community structures that emerge and learn the dynamics
+behind their evolution. Related is the topic of community effectiveness;  it is
+important to understand what makes communities effective in attracting and
+maintaining contributors, and extract best practices to help future communities
+evolve. What teams and projects are more productive, what are their practices
+and patterns?
 
-  \item[Productivity] Drive-by contributions: Is the gain in sustained contribution from fewer people or smaller individual contributions from many people
-
-  What teams, projects are more productive, what are their practices and patterns?
-
-Tools for hiring decision managers on developers and their code
-
-  \item[Project clustering] Similarly to developers, most repositories are
-    inactive and small~\cite{KGBSGD15}. Moreover, as Table~\ref{tab:stats}
-    presents, almost half of the repositories are forks.
-
-    You want to compare across similar projects or project types that do not matter, e.g. student projects. Features of gihub might also matter for different types. Monitor these indicators.
-Expectations on github projects, download only, contributions, advertising, using the tools only, …
-
-  \item[Software Ecosystems] Much of the open source development, especially in
-    areas such as software tools and libraries for web development, is taking
-    place on GitHub. The use of standardized software library management tools
-    (e.g. \textsf{npm} for Javascript or \textsf{gem} for Ruby) along with the
-    centralized hosting allows researchers to examine the full dependency graph
-    among libraries and their users at the method call
-    level. Researchers can then examine issues such as propagation of security
-    flows 
-
-  \item[Community best practices] 
-
-understand characteristics of successful projects, tell how our projects are doing and to determine if someone else’s project is solid enough to depend on or worthy of investment
-
-What is the correlation/interaction between the typical SE and community metrics
-
-Identify different community structures.  Eg., to better understand the community dynamics
-
-Timelines, engagement, diversity, .. Both to support decisions to use projects from others as well as quality of our projects
-
-Contributor evolution: What are the stages and what are the activities to drive people further along the engagement funnel
-
-
-  \item[Cross-project code analysis]
-Are there clusterings of languages that developers use together
-
-Files contributed by many distinct developers tend to be more buggy.  Could we create a tool using the github data
-
-Cross-project API analysis
-
-
-
-  \item[Trends and outliers]
-4 labels: inactive, active, hyper-active…, comparing MS to Google or Facebook repos
-
-
-Technology, language, projects, etc being used.  How to predict trends
-
-Clustering different repros yielded some extreme outliers that had to be filtered out to have a meaningful results.  This data gives us opportunity to look for these anomalous activity.
-
-Language popularity
-
-  \item[Operationalization of research] Maintaining process and policy
-
-\end{description}
+\noindent{\bfseries Trends and outliers} One might argue that the majority of
+Open Source development is being done on GitHub; even projects that are not
+GitHub-based do have a mirror on GitHub. This gives researchers a tremendous
+opportunity to do almost full population studies to identify software technology
+trends, such as architecture patterns, popularity of programming languages and
+tools.  Moreover, it may be interesting to identify edge cases and technology
+outliers; what are the factors and processes that makes projects, such as
+\textsf{node.js} and Ruby on Rails, instant successes? Longitudinal studies can
+help in modeling the processes that make certain technologies more prone to
+widespread adoption.
 
 \section{Conclusions}
 
-In this work, we presented the evolution of the GHTorrent dataset. The
-exploration of the wealth of data that GitHub provides has only begun;
-GHTorrent is 
+In this work, we presented the recent evolution of the GHTorrent dataset.
+GHTorrent will continue to evolve along with GitHub and adapt to user
+requirements in the foreseeable future.
+
+The exploration of the wealth of data provided by GitHub has just scratched the
+surface. As a research community, we must scale our research efforts, identify,
+target and solve real world issues that affect one of the most important fields
+of economic activity today: the collaborative production of software.
 
 \section*{Acknowledgements}
 
@@ -515,7 +506,8 @@ The GHTorrent project would like to thank Microsoft for their generous support
 that enabled the move to the Azure cloud. The author would also like the
 numerous GHTorrent users (Bogdan Vasilescu and Daniel German require special
 mention) for the fruitful discussions that led to a better GHTorrent for
-everybody.
+everybody. Finally, the author would like to thank Trevor Carnahan for
+the interesting discussion that led to the list of open research topics.
 
 \bibliographystyle{acm}
 \bibliography{ghtorrent-update}
