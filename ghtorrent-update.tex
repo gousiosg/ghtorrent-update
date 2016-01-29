@@ -55,7 +55,7 @@
 
 With over 31 million repositories and 12 million users, GitHub is by far the
 biggest open source forge in existense. Since early 2012, the GHTorrent project
-has been retrieving data from GitHub's open access API and offering them to the
+has been retrieving data from GitHub's open access {\sc api} and offering them to the
 repository mining community.  In this paper, we describe how we grew GHTorrent
 to 10x the size of early 2013, while at the same time improving its coverage,
 quality and versatility and offering data access services to hundrends of
@@ -101,15 +101,18 @@ researchers.
 
 \section{Introduction}
 
-GHTorrent was first presented as a proof-of-concept in 2012~\cite{GS12} and as
-a complete version in 2013~\cite{Gousi13}. Since then, it has been one of the most
+GHTorrent was first presented as a proof-of-concept in 2012~\cite{GS12} and as a
+complete version in 2013~\cite{Gousi13}. Since then, it has been one of the most
 popular datasets for the repository mining community. Apart from traditional
-repository mining, it has been frequently used as an easy-to-use initial
-filter for data to analyze, as a data mining competition
+repository mining, it has been frequently used as an easy-to-use initial filter
+for repositories to analyze, as a data mining competition
 dataset,\footnote{\url{https://github.com/blog/1864-third-annual-github-data-challenge}}
-as educational material,\footnote{e.g.\url{http://web.stanford.edu/class/cs224w/resources.html}} as and as a basis for other tools\cite{Cosent15}.
-By itself or through derivative work, it has been featured several times
-on popular developer news sites.\footnote{e.g. \url{https://news.ycombinator.com/item?id=8818035} and\\ \url{https://redd.it/2ig8yz}}
+as educational
+material,\footnote{e.g.\url{http://web.stanford.edu/class/cs224w/resources.html}}
+as and as a basis for other tools.  By itself or through
+derivative work, it has been featured several times on popular developer news
+sites.\footnote{e.g. \url{https://news.ycombinator.com/item?id=8818035} and\\
+\url{https://redd.it/2ig8yz}}
 
 GitHub is a lively community of collaborating developers; since GHTorrent
 started, its user base grew from 1.2 million users to 12 million users, while
@@ -119,18 +122,18 @@ actions has been growing exponentially. GHTorrent attempted (as
 Table~\ref{tab:stats} shows) to keep up with the increased traffic using two
 strategies: i) extensive profiling and optimization of both GHTorrent's code
 base and the underlying services and ii) relying on its user community for
-GitHub API keys.
+GitHub {\sc api} keys.
 
 In this paper, we outline the progress of GHTorrent since 2013; we focus on the
 additions, removals and differences in the way GHTorrent works and provides
 access to its datasets. We skip a generic introduction to GHTorrent itself, for
-which we refer interested authors to references~\cite{GS12} and~\cite{Gousi13}.
+which we refer interested readers to references~\cite{GS12} and~\cite{Gousi13}.
 We complement this work with a list of (still) open and promising research
 topics that can be explored using GHTorrent.
 
 \section{New developments}
 
-Changes to the data API endpoints at GitHub and issues in the data collection
+Changes to the data {\sc api} endpoints at GitHub and issues in the data collection
 process, as well as responding to user requests, led to a series of new
 developments in GHTorrent. We present the most important ones below.
 
@@ -164,7 +167,7 @@ developments in GHTorrent. We present the most important ones below.
 %      \hline
 %      Programmatic access users  & 150         &&\\
 %      \ldots of which per day    & 1-2         &&\\
-%      GitHub API keys            & 55          &&\\
+%      GitHub {\sc api} keys            & 55          &&\\
 %      Monthly web users          & 2000        &&\\
 %      \hline
 %  \end{tabular}
@@ -191,8 +194,8 @@ For those reasons, we introduced two additional operating modes:
   \item[Full-repo / user retrievals] When an error is reported by a GHTorrent
     user for a specific repository or a collection of repositories, we run a
     process that will retrieve all information about a given user or repository
-    recursively. The same process has been used by several OSS projects to
-    generate community analytics; the
+    recursively. The same process has been used by several Open Source Software
+    ({\sc oss}) projects to generate community analytics; the
     GHTorrent-Vagrant\footnote{https://github.com/ghtorrent/ghtorrent-vagrant}
     project was thus created to streamline the installation of GHTorrent for
     such purposes.
@@ -207,7 +210,7 @@ For those reasons, we introduced two additional operating modes:
 
 Furthermore, to eliminate data retrieval holes caused by arbitrary errors in
 collecting the event stream, we synchronize the contents of the event collection
-with Github Archive~\footnote{https://www.githubarchive.org} daily.
+with Github Archive\footnote{https://www.githubarchive.org} daily.
 
 \begin{figure}
   \begin{center}
@@ -236,11 +239,10 @@ like so:
 
 \noindent\includegraphics[scale=0.243]{languages}
 
-Until recently (Feb 2015), this information was not available through the API
+Until recently (Feb 2015), this information was not available through the {\sc api}
 and thus researchers could only rely on the main repository language when
 selecting repositories for analysis. This led to sub-optimal repository
-selections, e.g. in the, very frequent, case where the primary and the secondary
-language are the same. As of Nov 2015, GHTorrent collects size information (in
+selections. As of Nov 2015, GHTorrent collects size information (in
 bytes) for all programming languages in all repositories; this information is
 timestamped at the moment the retrieval was done. With it, researchers can
 refine the selection of repositories, cluster repositories in interesting ways
@@ -259,11 +261,11 @@ It thus recursively retrieves all information about the fork, such as the
 repository owner and issue labels. In the early versions of
 GHTorrent, recursive retrieval also included commits. For big and popular
 projects, such as Ruby on Rails (55k commits, 11k forks),
-this process required several (thousand) additional GitHub API calls, which
-quickly depleted GHTorrent limited API rates. For this reason, GHTorrent implemented a mechanism that only retrieve new commits from forks until
-it found a shared commit with the parent repository; it would then switch
+this process required several (thousand) additional GitHub {\sc api} calls, which
+quickly depleted GHTorrent limited {\sc api} rates. For this reason, GHTorrent implemented a mechanism that only retrieves new commits from forks until
+it finds a shared commit with the parent repository; it would then switch
 to copying commits internally within the GHTorrent database. This trick worked
-with formidable efficiency, as it cut down on API calls (and the time required
+with formidable efficiency, as it cut down on {\sc api} calls (and the time required
 to process them) by more than 95\% for big projects.
 
 However, its very efficiency caused a new problem; \emph{too many} forks where
@@ -271,7 +273,7 @@ processed meant that the table that records the association between commits and
 repositories (\texttt{project\_\-commits}) grew uncontrollably. Just for Ruby on
 Rails, this table would store more than 500M rows. The root of the problem
 is that \texttt{project\_commits} models an $M \times N$ relationship between
-projects and commits and this cannot be normalized further without signicant
+projects and commits and this cannot be normalized further without significant
 duplication (Boyce-Codd Normal form).
 
 Consequently, retrieving fork commits was converted to an optional
@@ -289,15 +291,15 @@ possible to identify fake users; GHTorrent now marks them as such in the MySQL
 database. Moreover, it can convert fake users to normal users if a user with
 the provided email is registered with GitHub in the future.
 
-Similarly to projects, users can also delete their accounts.
-GHTorrent keeps track of deleted users by marking them as such. This helps
-researchers to eliminate inactive users from their analyses.
+Users can also delete their accounts.  GHTorrent keeps track of deleted users by
+marking them as such. This helps researchers to eliminate inactive users from
+their analyses.
 
-Finally, repositories are also marked as deleted if GHTorrent cannot find
-them during the bi-monthly update cycle. To inform researchers about the
-last full repository update, the projects table includes an ``updated\_at''
-field. Moreover, the ``forks'' table has been removed and the parent
-repository information is being kept in the ``forked\_\-from'' field.
+Similarly to users, repositories are also marked as deleted if GHTorrent cannot
+find them during the bi-monthly update cycle. To inform researchers about the
+last full repository update, the projects table includes an \texttt{updated\_at}
+field. Finally, the \texttt{forks} table has been removed and the parent
+repository information is being kept in the \texttt{forked\_\-from} field.
 
 \subsection{User Geolocation}
 
@@ -308,7 +310,7 @@ place on earth to the longitude and latitude co-ordinates corresponding to this
 address. As GitHub's address field is free-form text, there are no guarantees
 about the format of the address fields. GHTorrent uses the OpenStreetMap
 geolocation service (Nominatim) for this functionality. To overcome Nomitatim's
-API restrictions, it caches geolocated places in the Mongo database. 160,000
+{\sc api} restrictions, it caches geolocated places in the Mongo database. 160,000
 cached addresses have been collected so far, with a very high cache hit ratio.
 An example application of geolocation information can be seen in
 Figure~\ref{fig:dev-map}.
@@ -316,7 +318,7 @@ Figure~\ref{fig:dev-map}.
 It is important to notice that geolocation in GHTorrent is a best effort
 approach. Initially, not all user provided location strings can be decoded to a
 real address; on the one hand, several users provide fictional addresses while
-on the other the Nominatim service is not top of the crop for geolocation.
+the Nominatim service is not top of the crop for geolocation.
 Moreover, users may choose not to share their addresses while cultural
 differences in online privacy perceptions may lead to whole clusters of users
 being under-represented. Consequently, care must be applied when drawing
@@ -343,12 +345,12 @@ The following services/features have been discontinued:
     can retrieve new repository members, but it cannot update membership
     information during the bi-monthly update cycles. Moreover, GitHub made the
     organization membership information private to organizations by default
-    (with the option to make it public resting with the organization), which
+    (with the option of making it public resting with the organization), which
     does not allow GHTorrent to update organization members from all
     organizations.
 
-  \item[Followers] GitHub does not emit follow events since late 2014. However,
-    the API endpoint does permit to retrieve user followers, so GHTorrent
+  \item[Followers] GitHub does not emit follow events since late 2013. However,
+    the {\sc api} endpoint does permit to retrieve user followers, so GHTorrent
     collects followers during the bi-monthly user update cycle. However, the
     timestamp of the follow action cannot be recorded accurately.
 
@@ -363,7 +365,7 @@ The following services/features have been discontinued:
 \subsection{Azure and Data Lake}
 
 GHTorrent's data collection process was recently moved to the Azure cloud
-platform. The move to Azure was necessitated for two reasons: i) to ensure the
+platform. The move to Azure was important for two reasons: i) to ensure the
 sustainability of GHTorrent in the face of growing hardware requirements ii) to
 better allocate available developer resources to the future of GHTorrent. The
 move was motivated by a donation of free Azure usage credits.
@@ -403,9 +405,9 @@ and distribution is being run:
     {\sc ssh} tunnels to MongoDB since late 2013. Programmatic access to the
     live MySQL server is planned for Q2 2016.
 
-  \item[GitHub API keys] In exchange for programmatic access, GHTorrent asks
-    interested parties to (voluntarily) provide GitHub API keys. We have
-    currently collected 50 active API keys, which allowed us to run the
+  \item[GitHub {\sc api} keys] In exchange for programmatic access, GHTorrent asks
+    interested parties to (voluntarily) provide GitHub {\sc api} keys. We have
+    currently collected 50 active {\sc api} keys, which allowed us to run the
     bi-montly update cycle for users and projects.
 
 \end{compactdesc}
@@ -416,44 +418,42 @@ and distribution is being run:
 
 \section{Open research topics}
 
-Due to the availability and homogeneity of data, GitHub has been the target of
-hundreds of researchers. GHTorrent has been in the epicentre of several research
+GHTorrent has been in the epicentre of several research
 efforts; we estimate that close to 80 papers have been written using data from
 GHTorrent.\footnote{GHTorrent's ``Hall of fame'' page lists at least 20:
 http://ghtorrent.org/halloffame.html} With GHTorrent data, schemata and
 limitations being understood by a large number of software engineering
 researchers, new capabilities on offer and a large scale data analysis
 infrastructure in place, the research community can collaborate to answer deeper
-questions and impact the practice of millions of developers per day.
+questions and impact the daily practice of millions of developers.
 
 Below, we present a collection of open research topics that can be answered
 with large-scale quantitative or mixed-method studies using GHTorrent.
 
-\noindent{\bfseries Developers} Moreover, not all GitHub users are
-software developers; web designers, testers, amateur programmers and students
-all use GitHub to collaborate in open projects. Different users have different
-needs and contribute in different capacities to OSS~\cite{}; to provide
-customized support to them it is important to devise algorithms to cluster them
-in groups based on their activity traces. Clustering methods can investigate
-signals such as the technology stack used, interaction types, physical location
-and contribution networks. On the same note, it is important to investigate how
+\noindent{\bfseries Developers} Not all GitHub users are software developers;
+web designers, testers, amateur programmers and students all use GitHub to
+collaborate in open projects. Different users have different needs and
+contribute in different capacities to {\sc oss}; to provide customized support
+to them it is important to devise algorithms to cluster them in groups based on
+their activity traces. Research in clustering methods can investigate signals
+such as the technology stack used, interaction types, physical location and
+contribution networks. On the same note, it is important to investigate how
 \emph{communities} of similar GitHub users work together to build large {\sc
 oss} projects. Finally, the extraction of developer profiles, for example
 comprising of programming languages, domain expertise and contribution types can
 facilitate the automated assignment of developers to incoming issues or the
 matching of developers to job descriptions.
 
-\noindent{\bfseries Projects} A common issue faced by researchers when
-analyzing repositories on GitHub is automatically determining what kind of
-contents the repository hosts. This issue is complicated by the fact that most
-repositories are small and inactive~\cite{KGBSGD15}, while, as
-Table~\ref{tab:stats} presents, almost half of them are forks. What is needed
-are methods to classify repositories into types based on their overall
-functionality (e.g. libraries, front end frameworks, web interfaces etc).
-Furthermore, it is very helpful to determine the application domain (e.g. web
-development, financial analysis, scientific software etc) that a repository is a
-part of, as this will enable cross-domain studies of development methods and
-styles.
+\noindent{\bfseries Projects} A common issue faced by researchers when analyzing
+repositories on GitHub is the automated determination of the kind of contents a
+repository hosts. This issue is complicated by the fact that most repositories
+are small and inactive~\cite{KGBSGD15}, while, as Table~\ref{tab:stats}
+presents, almost half of them are forks. What is needed are methods to classify
+repositories into types based on source code other artifacts (e.g. libraries,
+front end frameworks, web interfaces etc).  Furthermore, it is very helpful to
+determine the application domain (e.g. web development, financial analysis,
+scientific software etc) that a repository is a part of, as this will enable
+cross-domain studies of development methods and styles.
 
 \noindent{\bfseries Software Ecosystems} Much of the open source development,
 especially in areas such as software tools and libraries for web development, is
@@ -463,7 +463,7 @@ centralized hosting allows researchers to examine the full dependency graph
 among libraries and their users at the method call level. Researchers can then
 examine issues such as propagation of security flows, clustering of programming
 languages in various application domains and develop methodologies for
-data-driven API evolution.
+data-driven {\sc api} evolution.
 
 \noindent{\bfseries Community best practices} Existing research on open source
 software development has identified several patterns of collaborative
@@ -471,22 +471,22 @@ development (e.g. the onion model). This research however assumed community
 organizations very different than what GitHub affords; the ability to submit a
 pull request to any project on GitHub effectively flattens the organizational
 hierarchy and makes the contribution process more streamlined. New research
-should identify the new community structures that emerge and learn the dynamics
-behind their evolution. Related is the topic of community effectiveness;  it is
+should identify the emerging community structures and learn the dynamics
+behind their evolution. Related is the topic of community effectiveness; it is
 important to understand what makes communities effective in attracting and
 maintaining contributors, and extract best practices to help future communities
-evolve. What teams and projects are more productive, what are their practices
+evolve. Which teams and projects are more productive and what are their practices
 and patterns?
 
 \noindent{\bfseries Trends and outliers} One might argue that the majority of
-Open Source development is being done on GitHub; even projects that are not
-GitHub-based do have a mirror on GitHub. This gives researchers a tremendous
+{\sc oss} development is being done on GitHub; even projects that are not
+GitHub-based, do have a mirror on GitHub. This gives researchers a tremendous
 opportunity to do almost full population studies to identify software technology
 trends, such as architecture patterns, popularity of programming languages and
-tools.  Moreover, it may be interesting to identify edge cases and technology
-outliers; what are the factors and processes that makes projects, such as
-\textsf{node.js} and Ruby on Rails, instant successes? Longitudinal studies can
-help in modeling the processes that make certain technologies more prone to
+tools. Moreover, it may be interesting to identify edge cases and technology
+outliers; what are the factors and processes that makes certain projects, such
+as \textsf{node.js} and Ruby on Rails, instant successes? Longitudinal studies
+can help in modeling the processes that make technologies more prone to
 widespread adoption.
 
 \section{Conclusions}
@@ -495,10 +495,11 @@ In this work, we presented the recent evolution of the GHTorrent dataset.
 GHTorrent will continue to evolve along with GitHub and adapt to user
 requirements in the foreseeable future.
 
-The exploration of the wealth of data provided by GitHub has just scratched the
-surface. As a research community, we must scale our research efforts, identify,
-target and solve real world issues that affect one of the most important fields
-of economic activity today: the collaborative production of software.
+The exploration of the wealth of data provided by GitHub has just begun to
+scratch the surface. As a research community, we must scale our research
+efforts, identify, target and solve real world issues that affect one of the
+most important fields of economic activity today: the collaborative production
+of software.
 
 \section*{Acknowledgements}
 
