@@ -3,6 +3,7 @@
 \usepackage[noabbrev]{cleveref}
 \usepackage{paralist}
 
+
 \begin{document}
 
 % Copyright
@@ -98,7 +99,7 @@ of researchers.
 %
 \printccsdesc
 
-\keywords{dataset, GitHub, GHTorrent}
+\keywords{Dataset, GitHub, GHTorrent}
 
 \section{Introduction}
 
@@ -198,7 +199,7 @@ For those reasons, we introduced two additional operating modes:
     process that retrieves all information about a given user or repository
     recursively. The same process has been used by several Open Source Software
     ({\sc oss}) projects to generate community analytics; the
-    GHTorrent-Vagrant\footnote{https://github.com/ghtorrent/ghtorrent-vagrant}
+    GHTorrent-Vagrant\footnote{\url{https://github.com/ghtorrent/ghtorrent-vagrant}}
     project was thus created to streamline the installation of GHTorrent for
     such projects.
 
@@ -212,7 +213,7 @@ For those reasons, we introduced two additional operating modes:
 
 Furthermore, to eliminate data retrieval holes caused by arbitrary errors in
 collecting the event stream, we synchronize the contents of the event collection
-with GitHub Archive\footnote{https://www.githubarchive.org} daily.
+with GitHub Archive\footnote{\url{https://www.githubarchive.org}} daily.
 
 \begin{figure}
   \begin{center}
@@ -257,7 +258,7 @@ When a project is forked, GitHub will create an identical copy of the project
 repository and initialize a new issue tracker for it. Internally, the repository
 contents are not really duplicated; GitHub will use a copy-on-write mechanism to
 minimize disk space
-use.\footnote{http://githubengineering.com/counting-objects/} When GHTorrent
+use.\footnote{\url{http://githubengineering.com/counting-objects/}} When GHTorrent
 encounters a fork event, it has to treat the fork as a new repository. This
 process makes forking very cheap for GitHub, but very expensive for GHTorrent.
 
@@ -429,7 +430,7 @@ and distribution is being run:
 GHTorrent has been in the epicenter of several research
 efforts; we estimate that close to 80 papers have been written using data from
 GHTorrent.\footnote{GHTorrent's ``Hall of fame'' page lists at least 20:
-http://ghtorrent.org/halloffame.html} With GHTorrent data, schemata and
+\url{http://ghtorrent.org/halloffame.html}} With GHTorrent data, schemata and
 limitations being understood by a large number of software engineering
 researchers, new capabilities on offer and a large scale data analysis
 infrastructure in place, the research community can collaborate to answer deeper
