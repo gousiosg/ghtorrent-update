@@ -54,11 +54,11 @@
 \begin{abstract}
 
 With over 31 million repositories and 12 million users, GitHub is by far the
-biggest open source forge in existense. Since early 2012, the GHTorrent project
+biggest open source forge in existence. Since early 2012, the GHTorrent project
 has been retrieving data from GitHub's open access {\sc api} and offering them
 to the repository mining community. In this paper, we describe how we grew
 GHTorrent to 10x the size of early 2013, while at the same time improving its
-coverage, quality and versatility and offering data access services to hundrends
+coverage, quality, and versatility and offering data access services to hundreds
 of researchers.
 
 \end{abstract}
@@ -104,8 +104,8 @@ of researchers.
 GHTorrent was first presented as a proof-of-concept in 2012~\cite{GS12} and as a
 complete version in 2013~\cite{Gousi13}. Since then, it has been one of the most
 popular datasets for the repository mining community. Apart from traditional
-repository mining, it has been frequently used as an easy-to-use initial filter
-for repositories to analyze, as a data mining competition
+repository mining, it has been frequented as an easy-to-use initial filter
+before repository analysis, as a data mining competition
 dataset,\footnote{\url{https://github.com/blog/1864-third-annual-github-data-challenge}}
 as educational
 material,\footnote{e.g.\url{http://web.stanford.edu/class/cs224w/resources.html}}
@@ -115,8 +115,8 @@ sites.\footnote{e.g. \url{https://news.ycombinator.com/item?id=8818035} and\\
 \url{https://redd.it/2ig8yz}}
 
 GitHub is a lively community of collaborating developers; since GHTorrent
-started, its user base grew from 1.2 million users to 12 million users, while
-its repository count from 4 million to 30 million. GitHub's users are not idle
+started, its user base grew from 1.2 million users to 12 million users and the
+number of hosted repositories from 4 million to 30 million. GitHub's users are not idle,
 either; as Figure~\ref{fig:growth} shows, the number of events triggered by user
 actions has been growing exponentially. GHTorrent attempted (as
 Table~\ref{tab:stats} shows) to keep up with the increased traffic using two
@@ -125,7 +125,7 @@ base and the underlying services and ii) relying on its user community for
 GitHub {\sc api} keys.
 
 In this paper, we outline the progress of GHTorrent since 2013; we focus on the
-additions, removals and differences in the way GHTorrent works and provides
+steady improvements to the way GHTorrent works and provides users
 access to its datasets. We skip a generic introduction to GHTorrent itself, for
 which we refer interested readers to references~\cite{GS12} and~\cite{Gousi13}.
 We complement this work with a list of (still) open and promising research
@@ -171,16 +171,17 @@ developments in GHTorrent. We present the most important ones below.
 %      Monthly web users          & 2000        &&\\
 %      \hline
 %  \end{tabular}
-    \caption{GHTorrent database contents as of Jan 14, 2016. The difference column reports the difference to the numbers reported in reference ~\cite{Gousi13}}
+    \caption{GHTorrent database contents on Jan. 14, 2016. The difference column reports the difference to 2013~\cite{Gousi13}.}
   \end{small}
   \label{tab:stats}
 \end{table}
 
 \subsection{Three operation modes}
 
+% This is way too much medias in res, with and the sentence is flawed.
 GHTorrent primarily focuses on following GitHub's event stream and, by applying
-dependency-based recursive retrieval, to retrieve all linked entities (e.g.  all
-committers, commit contents, repository etc for a single PushEvent).
+dependency-based recursive retrieval, on retrieving all linked entities (e.g.  all
+committers, commit contents, repository, etc for a single PushEvent).
 Through the years, we discovered that this mode of operation, while efficient,
 has three issues: i) in case of failures (which are frequent, see
 Figure~\ref{fig:service-stats}), the resulting data is inconsistent,
