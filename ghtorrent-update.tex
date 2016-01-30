@@ -2,7 +2,14 @@
 \usepackage{tabularx}
 \usepackage[noabbrev]{cleveref}
 \usepackage{paralist}
+\usepackage[hidelinks]{hyperref}
+%tiny urls
+\makeatletter
+\def\url@georgiostyle{%
+  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\scriptsize\ttfamily}}}
+\makeatother
 
+\urlstyle{georgio}
 
 \begin{document}
 
@@ -110,7 +117,7 @@ repository mining, it has been frequented as an easy-to-use initial filter
 before repository analysis, as a data mining competition
 dataset,\footnote{\url{https://github.com/blog/1864-third-annual-github-data-challenge}}
 as educational
-material,\footnote{e.g.\url{http://web.stanford.edu/class/cs224w/resources.html}}
+material,\footnote{e.g. \url{http://web.stanford.edu/class/cs224w/resources.html}}
 as and as a basis for other tools.  By itself or through
 derivative work, it has been featured several times on popular developer news
 sites.\footnote{e.g. \url{https://news.ycombinator.com/item?id=8818035} and\\
@@ -429,7 +436,7 @@ and distribution is being run:
 
 GHTorrent has been in the epicenter of several research
 efforts; we estimate that close to 80 papers have been written using data from
-GHTorrent.\footnote{GHTorrent's ``Hall of fame'' page lists at least 20:
+GHTorrent.\footnote{GHTorrent's ``Hall of fame'' page lists at least 20:\\
 \url{http://ghtorrent.org/halloffame.html}} With GHTorrent data, schemata and
 limitations being understood by a large number of software engineering
 researchers, new capabilities on offer and a large scale data analysis
