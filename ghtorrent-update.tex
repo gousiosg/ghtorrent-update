@@ -67,8 +67,8 @@ biggest open source forge in existence. Since early 2012, the GHTorrent project
 has been retrieving data from GitHub's open access {\sc api} and offering them
 to the repository mining community. In this paper, we describe how we grew
 GHTorrent to ten times the size of early 2013, while at the same time improving
-its coverage, quality, and versatility and offering data access services to
-hundreds of researchers.
+its coverage, quality, and versatility and offering free and open data access
+services to hundreds of researchers.
 
 \end{abstract}
 
@@ -142,9 +142,9 @@ topics that can be explored using GHTorrent.
 
 \section{New developments}
 
-Changes to the data {\sc api} endpoints at GitHub and issues in the data collection
-process, as well as responding to user requests, led to a series of new
-developments in GHTorrent. We present the most important ones below.
+Changes to the data {\sc api} endpoints at GitHub and issues in the data
+collection process, as well as responding to user requests, led to a series of
+improvements in GHTorrent. We present the most important ones below.
 
 \begin{table}
   \centering
@@ -187,17 +187,21 @@ developments in GHTorrent. We present the most important ones below.
 
 \subsection{Three operation modes}
 
-% This is way too much medias in res, with and the sentence is flawed.
-GHTorrent primarily focuses on following GitHub's event stream and, by applying
-dependency-based recursive retrieval, on retrieving all linked entities (e.g.  all
-committers, commit contents, repository, etc for a single PushEvent).
+GHTorrent follows GitHub's event stream and retrieves the linked entities using
+a dependency-based recursive retrieval process. For example, whenever a
+developer pushes (possibly several) commits to GitHub, GitHub creates a nested
+PushEvent on the event stream, comprising information such as the transferred
+commits, their contents, and target repository. GHTorrent picks up the events on
+the stream and then it retrieves all commits, committers and repositories that
+are linked through the PushEvent.
+
 Through the years, we discovered that this mode of operation, while efficient,
-has three issues: i) in case of failures (which are frequent, see
+has three issues: i) in case of the frequent failures (see
 Figure~\ref{fig:service-stats}), the resulting data is inconsistent,
 ii) we cannot update volatile information about users and projects (e.g. user
 locations) as GitHub does not emit any related events, and
-iii) we cannot collect all the data for projects that existed before GHTorrent
-For those reasons, we introduced two additional operating modes:
+iii) we cannot collect all data for projects that existed before GHTorrent.
+For these reasons, we introduced two additional operating modes:
 
 \begin{compactdesc}
 
