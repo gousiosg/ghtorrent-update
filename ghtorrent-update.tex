@@ -2,6 +2,7 @@
 \usepackage{tabularx}
 \usepackage[noabbrev]{cleveref}
 \usepackage{paralist}
+\usepackage[table]{xcolor}
 \usepackage[hidelinks]{hyperref}
 %tiny urls
 \makeatletter
@@ -149,26 +150,28 @@ improvements in GHTorrent. We present the most important ones below.
 \begin{table}
   \centering
   \begin{small}
-  \label{tab:datasetsize}
+    \label{tab:datasetsize}
+       \resizebox{0.95\linewidth}{!}{
   \begin{tabular}{llll}
     \hline
-    \bfseries{Entity} & \bfseries{MongoDB} & \bfseries{MySQL} & \bfseries{Diff to 2013} \\
+    \bfseries{Entity} & \bfseries{MongoDB} & \bfseries{MySQL} & \bfseries{$\Delta_{2016/2013}$} \\
     \hline
-      Events                     & 476,047,453 & ---           & 11.1x\\
+\rowcolor[gray]{0.95}      Events                     & 476,047,453 & ---           & 11.1x\\
       Users                      & 6,733,244   & 9,277,113     & 8.4x \\
       \ldots of which fake       & ---         & 2,435,859     & ---\\
       \ldots of which deleted    & ---         & 271,590       & ---\\
       \ldots of which geolocated & ---         & 1,108,784     & \\
-      Repositories               & 28,851,321  & 25,578,419    & 21.8x\\
-      \ldots of which forks      & ---         & 10,486,114    & --- \\
-      \ldots of which deleted    & ---         & 4,986,095     & ---\\
+\rowcolor[gray]{0.95}      Repositories               & 28,851,321  & 25,578,419    & 21.8x\\
+\rowcolor[gray]{0.95}      \ldots of which forks      & ---         & 10,486,114    & --- \\
+\rowcolor[gray]{0.95}      \ldots of which deleted    & ---         & 4,986,095     & ---\\
       Commits                    & 367,815,284 & 362,057,838   & 12.3x \\
-      Issues                     & 24,165,582  & 25,351,996    & 10.3x \\
+\rowcolor[gray]{0.95}      Issues                     & 24,165,582  & 25,351,996    & 10.3x \\
       Pull requests              & 11,944,969  & 11,114,625    & 9.7x \\
-      Issue comments             & 42,021,374  & 43,416,372    & 14.6x\\
+\rowcolor[gray]{0.95}      Issue comments             & 42,021,374  & 43,416,372    & 14.6x\\
       Watchers (stars)           & 51,698,373  & 37,022,681    & 6.6x\\
       \hline
-    \end{tabular}
+  \end{tabular}
+  }
 
 %    \begin{tabular}{llll}
 %      \hline
