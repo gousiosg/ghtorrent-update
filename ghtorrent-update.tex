@@ -40,7 +40,6 @@
 \conferenceinfo{MSR}{'16 Austin, Texas USA}
 % --- End of Author Metadata ---
 
-% TODO (MMB) I think Tenfold would look better!
 \title{The Evolution of GHTorrent: Growing an Open Access Dataset 10x}
 \numberofauthors{1} %  in this sample file, there are a *total*
 % of EIGHT authors. SIX appear on the 'first-page' (for formatting
@@ -233,8 +232,10 @@ with GitHub Archive\footnote{\url{https://www.githubarchive.org}} daily.
   \begin{center}
     \includegraphics[scale=0.5]{github-growth}
   \end{center}
+  \vspace{-1em}
   \caption{Number of events per type generated per day (smoothing has been
   applied).}
+  \vspace{-1em}
   \label{fig:growth}
 \end{figure}
 
@@ -244,14 +245,16 @@ with GitHub Archive\footnote{\url{https://www.githubarchive.org}} daily.
     \includegraphics[scale=0.332]{api-errors}
     \includegraphics[scale=0.438]{events-per-min}
   \end{center}
+  \vspace{-1em}
   \caption{Service monitoring graphs for a typical day (Jan 18,
   2016).}
+  \vspace{-1em}
   \label{fig:service-stats}
 \end{figure}
 
 \subsection{Repository Languages}
 GitHub calculates programming language usage statistics for a
-repository by default. Upon visiting its main page on GitHub, the user see this
+repository by default. Upon visiting its main page on GitHub, the user sees this
 information as horizontal bar:
 
 \noindent\includegraphics[scale=0.243]{languages}
@@ -348,9 +351,11 @@ when drawing conclusions from this data.
   \begin{center}
     \includegraphics[scale=0.2]{dev-map.png}
   \end{center}
+  \vspace{-1em}
   \caption{GHTorrent users that registered a location plotted on a map after
   geocoding them.}
   \label{fig:dev-map}
+  \vspace{-1em}
 \end{figure}
 
 \subsection{Discontinued and Incomplete}
@@ -359,16 +364,17 @@ The following services or features have been discontinued:
 
 \begin{compactdesc}
 
-  % TODO (MMB) I did not understand this. Can you make it more digestable?
   \item[Repository Collaborators and Organization Members] On Nov 2014, GitHub
-    disabled the repository membership query endpoint. Interestingly, they did
-    not disable the membership events. As GHTorrent follows the event stream, it
-    can retrieve new repository members, but it cannot update membership
-    information during the bi-monthly update cycles. Moreover, GitHub made the
-    organization membership information private to organizations by default
-    (with the option of making it public resting with the organization), which
-    does not allow GHTorrent to update organization members from all
-    organizations.
+    disabled the repository membership query endpoint. It is therefore
+    impossible to determine which users have commit access to the repository in
+    a straightforward manner. Interestingly, they did not completely hide this
+    information; when a user is added as a member, a MemberEvent is fired. As
+    GHTorrent follows the event stream, it can retrieve new repository members,
+    but it cannot update membership information during the bi-monthly update
+    cycles. Moreover, GitHub made the organization membership information
+    private to organizations by default (with the option of making it public
+    resting with the organization), which does not allow GHTorrent to update
+    organization members from all organizations.
 
   \item[Followers] GitHub does not emit follow events since late 2013. However,
     the {\sc api} endpoint does permit to retrieve user followers, so GHTorrent
@@ -379,7 +385,7 @@ The following services or features have been discontinued:
     slicer for GHTorrent users that could not use the dataset in its
     entirety. In two years of operation, Lean GHTorrent only received 55 user
     requests. To the best of our knowledge, no visible work resulted from its
-    use. Since January 2016, Lean GHTorrent is discontinued.
+    use. As of January 2016, Lean GHTorrent is discontinued.
 
 \end{compactdesc}
 
@@ -437,12 +443,8 @@ and distribution is being run:
 
 
 \section{Open research topics}
-% TODO (MMB) Rofl, dude, epicentre! Changing that to center as the rest seems
-% AE, but i would perhaps advise using another word.
-% TODO: Also, how do you come to 80 when you only know of 20??
-
-GHTorrent has been in the epicenter of several research
-efforts; we estimate that close to 80 papers have been written using data from
+GHTorrent has been in the center of several research
+efforts; we estimate that close to 60 papers have been written using data from
 GHTorrent.\footnote{GHTorrent's ``Hall of fame'' page lists at least 20:\\
 \url{http://ghtorrent.org/halloffame.html}} With GHTorrent data, schemata and
 limitations being understood by a large number of software engineering
@@ -489,16 +491,15 @@ languages in various application domains and develop methodologies for
 data-driven {\sc api} evolution.
 
 \noindent{\bfseries Community best practices} Existing research on \textsf{oss}
-development has identified several patterns of collaborative development
-% TODO (MMB) reference the onion model or explain!
-(e.g. the onion model). This research however assumed community organizations
-very different than what GitHub affords; the ability to submit a pull request
-to any project on GitHub effectively flattens the organizational hierarchy and
-makes the contribution process more streamlined. New research should identify
-the emerging community structures and learn the dynamics behind their
-evolution. Related is the topic of community effectiveness; it is important to
-understand what makes communities effective in attracting and maintaining
-contributors, and extract best practices to help future communities
+development has identified several patterns of collaborative development (e.g.
+the onion model~\cite{Yunwe03}). This research however assumed community
+organizations very different than what GitHub affords; the ability to submit a
+pull request to any project on GitHub effectively flattens the organizational
+hierarchy and makes the contribution process more streamlined. New research
+should identify the emerging community structures and learn the dynamics behind
+their evolution. Related is the topic of community effectiveness; it is
+important to understand what makes communities effective in attracting and
+maintaining contributors, and extract best practices to help future communities
 evolve. Which teams and projects are more productive and what are their
 practices and patterns?
 
@@ -532,7 +533,10 @@ that enabled the move to the Azure cloud. The author would also like to thank
 the numerous GHTorrent users (Bogdan Vasilescu and Daniel German require
 special mention) for the fruitful discussions that led to a better GHTorrent
 for everybody. Finally, the author would like to thank Trevor Carnahan for the
-interesting discussion that led to the list of open research topics.
+interesting discussion that led to the list of open research topics and
+Moritz Beller for the extensive last minute review.
+
+\newpage
 
 \bibliographystyle{acm}
 \bibliography{ghtorrent-update}
